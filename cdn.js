@@ -136,7 +136,7 @@ fetchCDNOrg = async (relativeUrl) => {
 };
 
 // export select function.
-const select = async () => {
+module.exports = async () => {
   try {
     /* get the fastest cdn name.
   all requests sent at once. the first promise that get resolved is from the fastest cdn.*/
@@ -148,17 +148,3 @@ const select = async () => {
     return fetchCDNOrg;
   }
 };
-
-const Working = async () => {
-  try {
-    let serve = await select();
-
-    let res = await serve("/questionsimuck-size-exceeded");
-    //console.log(res);
-  } catch (err) {
-    console.log("err");
-  }
-};
-
-//test the module.
-Working();

@@ -1,13 +1,15 @@
 const { select } = require("./cdn");
 
 const Working = async () => {
-  const start = Date.now();
+  try {
+    let serve = await select();
 
-  const serve = await select();
-
-  let res = await serve("");
-  console.log(res.status);
-  console.log(Date.now() - start);
+    let res = await serve("/questionsimuck-size-exceeded");
+    //console.log(res);
+  } catch (err) {
+    console.log("err");
+  }
 };
 
+//test the module.
 Working();
