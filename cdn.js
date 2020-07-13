@@ -28,9 +28,8 @@ const isAvailable = async (cdn) => {
   try {
     let res = await axios({
       method: "GET",
-      url: `${cdn}`,
+      url: `${cdn}/stat`,
       validateStatus: () => true,
-      timeout: 2000,
     });
     if (res.status === 200) return cdn;
     return Promise.reject();
@@ -47,7 +46,6 @@ const isUrlAvailable = async (cdn, relativeUrl) => {
       method: "GET",
       url: `${cdn}${relativeUrl}`,
       validateStatus: () => true,
-      timeout: 2000,
     });
     if (result.status === 200) return true;
     return false;
@@ -87,7 +85,6 @@ const fetchCDN = (cdn) => {
           metod: "GET",
           urlh: `${cdn}${relativeUrl}`,
           validateStatus: () => true,
-          timeout: 2000,
         });
       } else {
         let cdnList = state.getCDNList();
@@ -97,7 +94,7 @@ const fetchCDN = (cdn) => {
           if (await isUrlAvailable(cdn, relativeUrl))
             return await axios({
               method: "GET",
-              url: `${cdn}/${relativeUrl}`,
+              url: `${cdn}${relativeUrl}`,
               validateStatus: () => true,
             });
         }
@@ -124,7 +121,7 @@ fetchCDNOrg = async (relativeUrl) => {
     });
     if (res.status === 200) return res;
     return {
-      statuscode: 404,
+      statuscode: res.status,
       status: "fail",
       message: `url: ${relativeUrl} dont exists on the servers`,
     };
@@ -152,16 +149,16 @@ const select = async () => {
   }
 };
 
-// const Working = async () => {
-//   try {
-//     let serve = await select();
+const Working = async () => {
+  try {
+    let serve = await select();
 
-//     let res = await serve("/questionsimuck-size-exceeded");
-//     console.log(res);
-//   } catch (err) {
-//     console.log("err");
-//   }
-// };
+    let res = await serve("/questionsimuck-size-exceeded");
+    console.log(res);
+  } catch (err) {
+    console.log("err");
+  }
+};
 
-// test the module.
-//Working();
+//test the module.
+Working();
